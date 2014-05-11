@@ -1,0 +1,46 @@
+# Maintainer: Aris Synodinos <arissynod-gmail-com>
+
+pkgname=fuzzylite
+pkgver=4.0
+pkgrel=1
+pkgdesc=('A Fuzzy Logic Control Library and Application in C++')
+arch=('any')
+url="http://www.fuzzylite.com"
+license=('Apache' 'GPL')
+depends=('gcc-libs' 'qt5-base')
+makedepends=('cmake' 'gcc')
+source=("http://www.fuzzylite.com/download/fuzzylite-sources")
+md5sums=("62ce1171fab7c2b5bfe11c790b20b015")
+
+prepare() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  msg "Applying patch"
+  patch -p8 -i ${startdir}/${pkgname}.patch || return 1
+  patch -p8 -i ${startdir}/qt${pkgname}.patch || return 1
+}
+
+build() {
+  cd ${srcdir}/${pkgname}-${pkgver}/${pkgname}
+  msg "Building fuzzylite"
+  # Building fuzzylite
+  mkdir -p build
+  cd build
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+  make
+  cd ${srcdir}/${pkgname}-${pkgver}/qt${pkgname}
+  msg "Building qtfuzzylite"
+  # Building qtfuzzylite
+  mkdir -p build
+  cd build
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DFL_USE_QT5=ON ..
+  make
+}
+package() {
+  cd ${srcdir}/${pkgname}-${pkgver}/${pkgname}/build
+  msg "Installing fuzzylite"
+  make install DESTDIR=${pkgdir}
+
+  cd ${srcdir}/${pkgname}-${pkgver}/qt${pkgname}/build
+  msg "Installing qtfuzzylite"
+  make install DESTDIR=${pkgdir}
+}
