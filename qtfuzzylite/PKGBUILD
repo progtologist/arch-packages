@@ -1,13 +1,13 @@
 # Maintainer: Aris Synodinos <arissynod-gmail-com>
 
-pkgname=fuzzylite
+pkgname=qtfuzzylite
 pkgver=4.0
 pkgrel=1
 pkgdesc=('A Fuzzy Logic Control Library and Application in C++')
 arch=('any')
 url="http://www.fuzzylite.com"
 license=('Apache' 'GPL')
-depends=('gcc-libs')
+depends=('gcc-libs' 'fuzzylite>=4.0' 'qt5-base')
 makedepends=('cmake' 'gcc')
 source=("http://www.fuzzylite.com/download/fuzzylite-sources")
 md5sums=("62ce1171fab7c2b5bfe11c790b20b015")
@@ -24,7 +24,7 @@ build() {
   # Building
   mkdir -p build
   cd build
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DFL_USE_QT5=ON ..
   make
 }
 package() {
