@@ -13,13 +13,13 @@ source=("http://www.fuzzylite.com/download/fuzzylite-sources")
 md5sums=("62ce1171fab7c2b5bfe11c790b20b015")
 
 prepare() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${srcdir}/fuzzylite-${pkgver}
   msg "Applying patch"
   patch -p8 -i ${startdir}/${pkgname}.patch || return 1
 }
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}/${pkgname}
+  cd ${srcdir}/fuzzylite-${pkgver}/${pkgname}
   msg "Building ${pkgname}"
   # Building
   mkdir -p build
@@ -28,7 +28,7 @@ build() {
   make
 }
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}/${pkgname}/build
+  cd ${srcdir}/fuzzylite-${pkgver}/${pkgname}/build
   msg "Installing ${pkgname}"
   make install DESTDIR=${pkgdir}
 }

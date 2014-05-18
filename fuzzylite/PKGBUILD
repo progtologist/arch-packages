@@ -3,7 +3,7 @@
 pkgname=fuzzylite
 pkgver=4.0
 pkgrel=1
-pkgdesc=('A Fuzzy Logic Control Library and Application in C++')
+pkgdesc='A Fuzzy Logic Control Library and Application in C++'
 arch=('any')
 url="http://www.fuzzylite.com"
 license=('Apache' 'GPL')
